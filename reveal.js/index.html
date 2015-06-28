@@ -75,6 +75,7 @@
               * Current Rust entered Alpha in January 2015
               * Anything before then is likely to use different syntax
               * Standard library has had a few reorganisations as well so if you can't work out how to call a method, then check your version of docs.
+              * Also note the nightly/beta docs != the stable docs! Check your URL carefully.
             </aside>
           </section>
 
@@ -135,14 +136,15 @@
               <li>Makes things painful in long lived data structures
             </ul>
             <p><strong>Solution 1:</strong> <code>Option.as_ref()</code> to have only a reference consumed
-            <p><strong>Solution 2:</strong> <code>Option.take()</code> to replace it with a None and return it<br>See also <code>std::mem::replace()</code>
+            <p><strong>Solution 2:</strong> <code>Option.take()</code> to replace it with a None and return it<br>See also <code>std::mem::replace() and swap()</code>
           </section>
           <section>
             <h2>More on as_ref()</h2>
             <p><code>as_ref()</code> -> I want a reference to a thing inside another</p>
 <pre><code data-trim>
-let maybe_reference_to_12 = Some(12i32).as_ref(); // gives Option&lt;&i32&gt;
-let maybe_mutable_reference_to_12 = Some(12i32).as_mut(); // gives Option&lt;&mut i32&gt;
+let maybe_reference = Some(12i32).as_ref(); // gives Option&lt;&i32&gt;
+let maybe_mutable_reference = Some(12i32).as_mut(); // gives Option&lt;&mut i32&gt;
+let error_or_mutable_reference = Ok(12i32).as_mut(); // gives Result&lt;&mut i32, SomeError&gt;
 </code></pre>
 <br>
             <p>See also <a href="http://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html"><code>AsRef</code></a> trait: figure out correct reference to slice/String</p>
@@ -159,7 +161,7 @@ let d: &[u8] = my_string.as_ref(); // view as a slice of underlying bytes
 
           <section>
             <h2>Wait, to_owned()?</h2>
-            <p><code>to_owned()</code> -> I want to own this thing</p>
+            <p><code>ToOwned#to_owned()</code> -> I want to own this thing</p>
             <p>Conceptually the same as <code>clone()</code> from a reference.</p>
             <br>
             <h4>Recommended reading</h4>
@@ -216,7 +218,7 @@ use std::ops::Mul;
 use std::num::One; // unstable, so requires the feature flag above
 
 fn main() {
-    println!("vec: {}", calc_product_working(vec![1i32, 2, 3].iter().cloned()));
+    println!("vec: {}", calc_product_generic(vec![1i32, 2, 3].iter().cloned()));
     println!("range: {}", calc_product_generic(1u64 .. 4));
 }
 
