@@ -233,6 +233,16 @@ fn calc_product_generic&lt;I, T&gt;(iter: I) -&gt; T
         </section>
 
         <section>
+          <h2>Dealing with unwrap</h2>
+          <p>By default you get no backtrace (aka stacktrace)</p>
+          <p>Use this magic snippet</p>
+          <pre><code data-trim>
+// in your bash.rc
+export RUST_BACKTRACE=1
+          </code></pre>
+        </section>
+
+        <section>
           <h2>Thanks!</h2>
           <p>(Rust docs are much better now than when I started;<br>this talk ended up much shorter than I expected!)
           <br>
